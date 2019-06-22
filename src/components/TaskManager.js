@@ -7,34 +7,19 @@ import TaskList from './TaskList';
 
 class TaskManager extends Component {
     render() {
-        // const {
-        //     taxonomyMetadata,
-        //     classifications,
-        //     handleKeywordsExtractedChange,
-        //     handleKeywordsManualChange,
-        //     initAutoTag
-        // } = this.props;
+        const {
+            tasks
+        } = this.props;
 
         return (
             <Aux>
-                <Menu>
+                <Menu className='AppMenu'>
                     <div className='AppName'>
                         <Icon name='tasks' />
-                        Task Manager
+                        <span>Task Manager</span>
                     </div>
-                    <Menu.Menu position='right'>
-                        <Menu.Item>
-                            <Button positive>Save</Button>
-                        </Menu.Item>
-                    </Menu.Menu>
                 </Menu>
-                <Grid id='TaskViewGrid'>
-                    <Grid.Row>
-                        <Grid.Column>
-                            <TaskList/>
-                        </Grid.Column>
-                    </Grid.Row>
-                </Grid>
+                <TaskList tasks={tasks}/>
             </Aux>
         );
     }

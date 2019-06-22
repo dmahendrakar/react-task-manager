@@ -12,24 +12,32 @@ class TaskList extends Component {
     }
 
     render() {
-        // const {
-        //     taxonomyMetadata,
-        //     classifications,
-        //     handleKeywordsExtractedChange,
-        //     handleKeywordsManualChange,
-        //     initAutoTag
-        // } = this.props;
+        const {
+            tasks
+        } = this.props;
 
         const {
             openEditor,
             selectedTask
         } = this.state;
 
+        const taskRows = tasks.map(task => {
+            return (
+                <Table.Row className='TableRow'>
+                    <Table.Cell collapsing>
+                        <Checkbox slider />
+                    </Table.Cell>
+                    <Table.Cell>{task.title}</Table.Cell>
+                    <Table.Cell>{task.status || 'Pending'}</Table.Cell>
+                </Table.Row>
+            );
+        });
+
         return (
-            <Aux>
+            <div className='TaskListView'>
                 <div className='TaskListOperations'>
                     <Input floated='left' icon='search' placeholder='Search by title...' />
-                    <Button floated='right' icon labelPosition='left' primary size='small'>
+                    <Button floated='right' icon labelPosition='left' color='teal' size='small'>
                         <Icon name='plus' /> Add
                     </Button>
                 </div>
@@ -38,42 +46,22 @@ class TaskList extends Component {
                         <Table.Row>
                             <Table.HeaderCell />
                             <Table.HeaderCell>Title</Table.HeaderCell>
-                            <Table.HeaderCell>Due Date</Table.HeaderCell>
                             <Table.HeaderCell>Status</Table.HeaderCell>
                         </Table.Row>
                     </Table.Header>
 
                     <Table.Body>
-                        <Table.Row className='TableRow'>
-                            <Table.Cell collapsing>
-                                <Checkbox slider onClick={event => {
-                                    alert('checkbox clicked')
-                                }} />
-                            </Table.Cell>
-                            <Table.Cell  onClick={() => {
-                            alert('clicked row')
-                        }}>Receiving assignment from M</Table.Cell>
-                            <Table.Cell>May 11, 2014</Table.Cell>
-                            <Table.Cell>Completed</Table.Cell>
-                        </Table.Row>
-                        <Table.Row className='TableRow'>
-                            <Table.Cell collapsing>
-                                <Checkbox slider />
-                            </Table.Cell>
-                            <Table.Cell>Technical briefing with Q</Table.Cell>
-                            <Table.Cell>May 11, 2014</Table.Cell>
-                            <Table.Cell>Pending</Table.Cell>
-                        </Table.Row>
+                        {taskRows}
                     </Table.Body>
 
                     <Table.Footer fullWidth>
                         <Table.Row>
                             <Table.HeaderCell />
                             <Table.HeaderCell colSpan='4'>
-                                <Button floated='right' size='small' primary>
+                                <Button floated='right' size='small' color='teal'>
                                     <Icon name='checkmark' /> Completed
                                 </Button>
-                                <Button floated='right' size='small' primary>
+                                <Button floated='right' size='small' color='teal'>
                                     <Icon name='minus' /> Remove
                                 </Button>
                             </Table.HeaderCell>
@@ -81,7 +69,7 @@ class TaskList extends Component {
                     </Table.Footer>
                 </Table>
                 <TaskEditor open={openEditor} task={selectedTask}/>
-            </Aux>
+            </div>
         );
     }
 }

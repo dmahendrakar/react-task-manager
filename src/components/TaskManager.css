@@ -1,8 +1,11 @@
+.AppMenu {
+    text-align: center;
+    justify-content: 'space-around';
+}
+
 .AppName {
     font-size: 20px;
     padding: .92857143em 1.14285714em;
-}
-
-#TaskViewGrid {
-    margin: 5em;
+    justify-content: 'space-around';
+    color: #2B7A78;
 }

@@ -1,3 +1,12 @@
 .TableRow:hover {
-    background-color: #F8F8F8
+    background-color: #3AAFA9
+}
+
+.TaskListView {
+    margin: 5em;
+}
+
+.ThemedButton {
+    background-color: #3AAFA9 !important;
+    color: #DEF2F1 !important;
 }
