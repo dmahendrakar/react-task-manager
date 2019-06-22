@@ -3,14 +3,10 @@ import {Menu, Button, Grid, Icon} from 'semantic-ui-react';
 
 import './TaskManager.css';
 import Aux from '../hoc/Aux/Aux';
-import TaskList from './TaskList';
+import TaskList from '../containers/TaskList';
 
 class TaskManager extends Component {
     render() {
-        const {
-            tasks
-        } = this.props;
-
         return (
             <Aux>
                 <Menu className='AppMenu'>
@@ -19,7 +15,7 @@ class TaskManager extends Component {
                         <span>Task Manager</span>
                     </div>
                 </Menu>
-                <TaskList tasks={tasks}/>
+                <TaskList/>
             </Aux>
         );
     }

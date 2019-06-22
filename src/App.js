@@ -5,7 +5,7 @@ import createSagaMiddleware from 'redux-saga';
 import {Provider} from 'react-redux';
 
 import './App.css';
-import TaskManager from './containers/TaskManager';
+import TaskManager from './components/TaskManager';
 import * as actions from './store/actions';
 import rootSaga from './store/sagas';
 import rootReducer from './store/reducers';
@@ -18,7 +18,7 @@ export class App extends Component {
   }
 
   componentWillMount() {
-    this.store.dispatch(actions.initTasks());
+    this.store.dispatch(actions.fetchTasks());
   }
 
   /**

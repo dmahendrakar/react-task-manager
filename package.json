@@ -6,7 +6,7 @@
     "@babel/plugin-proposal-class-properties": "^7.3.4",
     "@babel/polyfill": "^7.2.5",
     "axios": "^0.18.0",
-    "moment": "^2.24.0",
+    "moment-timezone": "^0.5.25",
     "prop-types": "^15.7.2",
     "react": "^16.8.2",
     "react-dom": "^16.8.2",

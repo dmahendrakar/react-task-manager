@@ -2,33 +2,51 @@ import React, { Component } from 'react';
 import { Button, Checkbox, Icon, Table, Input } from 'semantic-ui-react';
 
 import './TaskList.css';
-import Aux from '../hoc/Aux/Aux';
 import TaskEditor from './TaskEditor';
+import {getHumanizedTime} from '../shared/utility';
 
 class TaskList extends Component {
     state = {
         openEditor: false,
+        openCreator: false,
         selectedTask: {}
     }
 
     render() {
         const {
-            tasks
+            tasks,
+            onCreate,
+            onUpdate,
+            onDelete
         } = this.props;
 
         const {
             openEditor,
+            openCreator,
             selectedTask
         } = this.state;
 
         const taskRows = tasks.map(task => {
+            const ClickableCell = (props) => {
+                return (
+                    <Table.Cell onClick={()=>{this.setState({
+                        openEditor: true,
+                        selectedTask: task
+                    })}}>{props.value}</Table.Cell>
+                );
+            }
+
             return (
-                <Table.Row className='TableRow'>
+                <Table.Row 
+                    className='TableRow' 
+                    key={task.id}
+                    >
                     <Table.Cell collapsing>
                         <Checkbox slider />
-                    </Table.Cell>
-                    <Table.Cell>{task.title}</Table.Cell>
-                    <Table.Cell>{task.status || 'Pending'}</Table.Cell>
+                    </Table.Cell>                
+                    <ClickableCell value={task.title}/>
+                    <ClickableCell value={getHumanizedTime(task.creationTime)}/>
+                    <ClickableCell value={task.status || 'PENDING'}/>
                 </Table.Row>
             );
         });
@@ -37,7 +55,11 @@ class TaskList extends Component {
             <div className='TaskListView'>
                 <div className='TaskListOperations'>
                     <Input floated='left' icon='search' placeholder='Search by title...' />
-                    <Button floated='right' icon labelPosition='left' color='teal' size='small'>
+                    <Button floated='right' icon labelPosition='left' color='teal' size='small'
+                        onClick={()=>{
+                            this.setState({openCreator: true});
+                        }}
+                    >
                         <Icon name='plus' /> Add
                     </Button>
                 </div>
@@ -46,6 +68,7 @@ class TaskList extends Component {
                         <Table.Row>
                             <Table.HeaderCell />
                             <Table.HeaderCell>Title</Table.HeaderCell>
+                            <Table.HeaderCell>Created Date</Table.HeaderCell>
                             <Table.HeaderCell>Status</Table.HeaderCell>
                         </Table.Row>
                     </Table.Header>
@@ -68,7 +91,17 @@ class TaskList extends Component {
                         </Table.Row>
                     </Table.Footer>
                 </Table>
-                <TaskEditor open={openEditor} task={selectedTask}/>
+                <TaskEditor 
+                    open={openCreator} 
+                    onClose={()=>{this.setState({openCreator:false})}}
+                    onSubmit={(newTask)=>{this.setState({openCreator:false}); onCreate(newTask);}}
+                />
+                <TaskEditor 
+                    open={openEditor} 
+                    task={selectedTask}
+                    onClose={()=>{this.setState({openEditor:false})}}
+                    onSubmit={(newTask)=>{this.setState({openEditor:false}); console.log(newTask);}}
+                />
             </div>
         );
     }

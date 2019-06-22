@@ -1,14 +1,18 @@
-import {all, takeEvery, debounce} from 'redux-saga/effects';
+import {all, takeEvery} from 'redux-saga/effects';
 
 import * as actionTypes from '../actions/actionTypes';
 import {
     initTasksSaga,
-    saveTasksSaga
+    createTasksSaga,
+    updateTaskSaga,
+    deleteTaskSaga
 } from './tasks';
 
 export function* watchTasks() {
-    yield takeEvery(actionTypes.INIT_TASKS, initTasksSaga);
-    // yield debounce(2000, actionTypes.SAVE_TASKS, saveTasksSaga);
+    yield takeEvery(actionTypes.FETCH_TASKS, initTasksSaga);
+    yield takeEvery(actionTypes.CREATE_TASK, createTasksSaga);
+    // yield takeEvery(actionTypes.UPDATE_TASK, updateTaskSaga);
+    // yield takeEvery(actionTypes.DELETE_TASK, deleteTaskSaga);
 }
 
 export default function* rootSaga() {

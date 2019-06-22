@@ -1,15 +1,8 @@
 import * as actionTypes from '../actions/actionTypes';
 
-export const initTasks = () => {
+export const fetchTasks = () => {
     return {
-        type: actionTypes.INIT_TASKS
-    };
-};
-
-export const setTasks = tasks => {
-    return {
-        type: actionTypes.SET_TASKS,
-        tasks
+        type: actionTypes.FETCH_TASKS
     };
 };
 
@@ -32,28 +25,103 @@ export const fetchTasksFailed = error => {
     };
 };
 
-export const saveTasks = tasks => {
+export const updateTask = tasks => {
     return {
-        type: actionTypes.SAVE_TASKS,
+        type: actionTypes.UPDATE_TASK,
         tasks
     };
 };
 
-export const saveTasksStart = () => {
+export const updateTaskStart = () => {
     return {
-        type: actionTypes.SAVE_TASKS_START
+        type: actionTypes.UPDATE_TASK_START
     };
 };
 
-export const saveTasksSucceeded = () => {
+export const updateTaskSucceeded = () => {
     return {
-        type: actionTypes.SAVE_TASKS_SUCCEEDED
+        type: actionTypes.UPDATE_TASK_SUCCEEDED
     };
 };
 
-export const saveTasksFailed = error => {
+export const updateTaskFailed = error => {
     return {
-        type: actionTypes.SAVE_TASKS_FAILED,
+        type: actionTypes.UPDATE_TASK_FAILED,
         error
+    };
+};
+
+export const createTask = task => {
+    return {
+        type: actionTypes.CREATE_TASK,
+        task
+    };
+};
+
+export const createTaskStart = () => {
+    return {
+        type: actionTypes.CREATE_TASK_START
+    };
+};
+
+export const createTaskSucceeded = () => {
+    return {
+        type: actionTypes.CREATE_TASK_SUCCEEDED
+    };
+};
+
+export const createTaskFailed = error => {
+    return {
+        type: actionTypes.CREATE_TASK_FAILED,
+        error
+    };
+};
+
+export const deleteTask = task => {
+    return {
+        type: actionTypes.DELETE_TASK,
+        task
+    };
+};
+
+export const deleteTaskStart = () => {
+    return {
+        type: actionTypes.DELETE_TASK_START
+    };
+};
+
+export const deleteTaskSucceeded = () => {
+    return {
+        type: actionTypes.DELETE_TASK_SUCCEEDED
+    };
+};
+
+export const deleteTaskFailed = error => {
+    return {
+        type: actionTypes.DELETE_TASK_FAILED,
+        error
+    };
+};
+
+// Add or replace task
+export const initTasks = tasks => {
+    return {
+        type: actionTypes.INIT_TASKS,
+        tasks
+    };
+};
+
+// Add or replace task
+export const setTask = task => {
+    return {
+        type: actionTypes.SET_TASK,
+        task
+    };
+};
+
+export const removeTask = task => {
+    return {
+        type: actionTypes.REMOVE_TASK,
+        task
     };
 };
