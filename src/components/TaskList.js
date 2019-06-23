@@ -3,13 +3,14 @@ import { Button, Checkbox, Icon, Table, Input } from 'semantic-ui-react';
 
 import './TaskList.css';
 import TaskEditor from './TaskEditor';
-import {getHumanizedTime} from '../shared/utility';
+import {getHumanizedTime, updateObject} from '../shared/utility';
 
 class TaskList extends Component {
     state = {
         openEditor: false,
         openCreator: false,
-        selectedTask: {}
+        clickedTask: {},
+        checkedTasks: []
     }
 
     render() {
@@ -23,7 +24,8 @@ class TaskList extends Component {
         const {
             openEditor,
             openCreator,
-            selectedTask
+            clickedTask,
+            checkedTasks
         } = this.state;
 
         const taskRows = tasks.map(task => {
@@ -31,7 +33,7 @@ class TaskList extends Component {
                 return (
                     <Table.Cell onClick={()=>{this.setState({
                         openEditor: true,
-                        selectedTask: task
+                        clickedTask: task
                     })}}>{props.value}</Table.Cell>
                 );
             }
@@ -42,7 +44,11 @@ class TaskList extends Component {
                     key={task.id}
                     >
                     <Table.Cell collapsing>
-                        <Checkbox slider />
+                        <Checkbox slider onClick={()=>{
+                            this.setState(updateObject(this.state, {
+                                checkedTasks: [...checkedTasks, task]
+                            }))
+                        }} />
                     </Table.Cell>                
                     <ClickableCell value={task.title}/>
                     <ClickableCell value={getHumanizedTime(task.creationTime)}/>
@@ -81,7 +87,9 @@ class TaskList extends Component {
                         <Table.Row>
                             <Table.HeaderCell />
                             <Table.HeaderCell colSpan='4'>
-                                <Button floated='right' size='small' color='teal'>
+                                <Button floated='right' size='small' color='teal' onClick={()=>{
+                                    onDelete(checkedTasks);
+                                }}>
                                     <Icon name='minus' /> Remove
                                 </Button>
                                 <Button floated='right' size='small' color='teal'>
@@ -98,7 +106,7 @@ class TaskList extends Component {
                 />
                 <TaskEditor 
                     open={openEditor} 
-                    task={selectedTask}
+                    task={clickedTask}
                     onClose={()=>{this.setState({openEditor:false})}}
                     onSubmit={(newTask)=>{this.setState({openEditor:false}); onUpdate(newTask);}}
                 />

@@ -1,3 +1,7 @@
+import {
+    difference as _difference
+} from 'underscore';
+
 import * as actionTypes from '../actions/actionTypes';
 import {updateObject} from '../../shared/utility';
 
@@ -29,6 +33,13 @@ const reducer = (state = initialState, action) => {
             tasks: updateObject(state.tasks, {
                 [task.id]: task
             })
+        });
+    }
+    case actionTypes.REMOVE_TASKS: {
+        const {tasks} = action;
+
+        return updateObject(state, {
+            tasks: _difference(state.tasks, tasks)
         });
     }
     default:

@@ -77,28 +77,28 @@ export const createTaskFailed = error => {
     };
 };
 
-export const deleteTask = task => {
+export const deleteTasks = tasks => {
     return {
-        type: actionTypes.DELETE_TASK,
-        task
+        type: actionTypes.DELETE_TASKS,
+        tasks
     };
 };
 
-export const deleteTaskStart = () => {
+export const deleteTasksStart = () => {
     return {
-        type: actionTypes.DELETE_TASK_START
+        type: actionTypes.DELETE_TASKS_START
     };
 };
 
-export const deleteTaskSucceeded = () => {
+export const deleteTasksSucceeded = () => {
     return {
-        type: actionTypes.DELETE_TASK_SUCCEEDED
+        type: actionTypes.DELETE_TASKS_SUCCEEDED
     };
 };
 
-export const deleteTaskFailed = error => {
+export const deleteTasksFailed = error => {
     return {
-        type: actionTypes.DELETE_TASK_FAILED,
+        type: actionTypes.DELETE_TASKS_FAILED,
         error
     };
 };
@@ -119,9 +119,9 @@ export const setTask = task => {
     };
 };
 
-export const removeTask = task => {
+export const removeTasks = tasks => {
     return {
-        type: actionTypes.REMOVE_TASK,
-        task
+        type: actionTypes.REMOVE_TASKS,
+        tasks
     };
 };

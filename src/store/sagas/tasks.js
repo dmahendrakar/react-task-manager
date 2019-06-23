@@ -1,8 +1,11 @@
-import {put, select} from 'redux-saga/effects';
+import {put} from 'redux-saga/effects';
+import {
+    pluck as _pluck
+} from 'underscore';
 
 import axios from '../../shared/axios';
 import * as actions from '../actions';
-import {hasOwnProperty, updateObject} from '../../shared/utility';
+import {updateObject} from '../../shared/utility';
 
 export function* initTasksSaga(action) {
     try {
@@ -13,7 +16,7 @@ export function* initTasksSaga(action) {
 
         yield put(actions.fetchTasksSucceeded());
     } catch (error) {
-        console.error('[TasksWidget] error', error);
+        console.error('[TaskManagerWidget] error', error);
         yield put(actions.fetchTasksFailed(error));
     }
 }
@@ -29,7 +32,7 @@ export function* createTaskSaga(action) {
 
         yield put(actions.createTaskSucceeded());
     } catch (error) {
-        console.error('[TasksWidget] error', error);
+        console.error('[TaskManagerWidget] error', error);
         yield put(actions.createTaskFailed(error));
     }
 }
@@ -44,7 +47,24 @@ export function* updateTaskSaga(action) {
 
         yield put(actions.updateTaskSucceeded());
     } catch (error) {
-        console.error('[TasksWidget] error', error);
+        console.error('[TaskManagerWidget] error', error);
         yield put(actions.updateTaskFailed(error));
+    }
+}
+
+export function* deleteTasksSaga(action) {
+    try {
+        yield put(actions.deleteTasksStart());
+
+        const {tasks} = action;        
+        yield axios.delete('/bulk', {data: _pluck(tasks, 'id').map(id => {
+            return {id};
+        })});
+        yield put(actions.removeTasks(tasks));
+
+        yield put(actions.deleteTasksSucceeded());
+    } catch (error) {
+        console.error('[TaskManagerWidget] error', error);
+        yield put(actions.deleteTasksFailed(error));
     }
 }
