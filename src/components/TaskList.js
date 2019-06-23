@@ -10,7 +10,8 @@ class TaskList extends Component {
         openEditor: false,
         openCreator: false,
         clickedTask: {},
-        checkedTasks: []
+        checkedTasks: [],
+        checkedTasksIndex: []
     }
 
     render() {
@@ -26,13 +27,15 @@ class TaskList extends Component {
             openEditor,
             openCreator,
             clickedTask,
-            checkedTasks
+            checkedTasks,
+            checkedTasksIndex
         } = this.state;
 
-        const taskRows = tasks.map(task => {
+        const taskRows = tasks.map((task, index) => {
             const ClickableCell = (props) => {
                 return (
-                    <Table.Cell onClick={()=>{this.setState({
+                    <Table.Cell onClick={()=>{
+                        this.setState({
                         openEditor: true,
                         clickedTask: task
                     })}}>{props.value}</Table.Cell>
@@ -45,9 +48,17 @@ class TaskList extends Component {
                     key={task.id}
                     >
                     <Table.Cell collapsing>
-                        <Checkbox slider onClick={()=>{
+                        <Checkbox slider checked={checkedTasksIndex.includes(index)} onClick={()=>{
+                            const _checkedTasksIndex = checkedTasksIndex;
+                            if (!_checkedTasksIndex.includes(index)) {
+                                _checkedTasksIndex.push(index);
+                            } else {
+                                _checkedTasksIndex.splice(_checkedTasksIndex.indexOf(index), 1);
+                            }
+
                             this.setState(updateObject(this.state, {
-                                checkedTasks: [...checkedTasks, task]
+                                checkedTasks: [...checkedTasks, task],
+                                checkedTasksIndex: _checkedTasksIndex
                             }))
                         }} />
                     </Table.Cell>                
@@ -89,17 +100,21 @@ class TaskList extends Component {
                             <Table.HeaderCell />
                             <Table.HeaderCell colSpan='4'>
                                 <Button floated='right' size='small' color='teal' onClick={()=>{
-                                    onDelete(checkedTasks);
+                                    this.setState({checkedTasks: [], checkedTasksIndex: []}, ()=>{
+                                        onDelete(checkedTasks);
+                                    });
                                 }}>
                                     <Icon name='minus' /> Remove
                                 </Button>
                                 <Button floated='right' size='small' color='teal' onClick={()=>{
-                                    onBulkUpdate(checkedTasks.map(task => {
-                                        task.status = 'COMPLETED';
-                                        return task
-                                    }))
+                                    this.setState({checkedTasks: [], checkedTasksIndex: []}, ()=>{
+                                        onBulkUpdate(checkedTasks.map(task => {
+                                            task.status = 'COMPLETED';
+                                            return task
+                                        }))
+                                    });
                                 }}>
-                                    <Icon name='paper plane' /> Completed
+                                    <Icon name='check' /> Completed
                                 </Button>
                             </Table.HeaderCell>
                         </Table.Row>

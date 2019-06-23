@@ -8,15 +8,9 @@ import {updateObject, getHumanizedTime} from '../shared/utility';
 class TaskEditor extends Component {
     constructor(props) {
         super(props);
-        this.state = this.initializeState();
+        this.state = {};
     }
 
-    initializeState = () => {
-        return {
-            title: '', 
-            description: ''
-        };
-    }
     handleChange = (e, { name, value }) => this.setState({ [name]: value })
 
     shouldComponentUpdate(nextProps, nextState) {
@@ -26,7 +20,7 @@ class TaskEditor extends Component {
 
     componentDidUpdate = (prevProps, prevState) => {
         if(JSON.stringify(this.state) === JSON.stringify(prevState) && this.props.task) {
-            this.setState(this.props.task || this.initializeState());
+            this.setState(this.props.task || {});
         }
     }
 
@@ -34,7 +28,8 @@ class TaskEditor extends Component {
         const {
             open,
             onClose,
-            onSubmit
+            onSubmit,
+            task
         } = this.props;
 
         const {
@@ -50,7 +45,7 @@ class TaskEditor extends Component {
                 <Modal 
                     open={open} 
                     closeIcon 
-                    onClose={()=>{this.setState(this.initializeState(), ()=>{
+                    onClose={()=>{this.setState({}, ()=>{
                         onClose()
                     })}}
                     >
@@ -59,7 +54,7 @@ class TaskEditor extends Component {
                     <Form onSubmit={(e) => {
                             e.preventDefault();
                             const data = Object.assign({}, this.state);
-                            this.setState(this.initializeState(), ()=>{
+                            this.setState({}, ()=>{
                                 onSubmit(updateObject(data, {
                                     creationTime: data.creationTime || Date.now(),
                                     lastModifiedTime: Date.now(),
@@ -82,6 +77,7 @@ class TaskEditor extends Component {
                             placeholder='Task description...' 
                             onChange={this.handleChange}/>
                         <Form.Checkbox 
+                            style={{display: task ? 'block' : 'none'}}
                             name='status'
                             checked={status === 'COMPLETED'}
                             className='EditorStatusCheckbox' 
@@ -92,14 +88,14 @@ class TaskEditor extends Component {
                                 value: status === 'PENDING' ? 'COMPLETED' : 'PENDING'
                             })}    
                             />
-                        <Label>
+                        <Label style={{display: task ? 'inline' : 'none'}}>
                             <Icon name='calendar' /> Created on: {getHumanizedTime(creationTime)}
                         </Label>  
-                        <Label>
+                        <Label style={{display: task ? 'inline' : 'none'}}>
                             <Icon name='calendar' /> Modified on: {getHumanizedTime(lastModifiedTime)}
                         </Label>        
-                        <Form.Button className='EditorSubmitButton' color='green'>
-                            <Icon name='checkmark' /> Save
+                        <Form.Button className='EditorSubmitButton' color='green' size='small'>
+                            <Icon name='save outline'/> Save
                         </Form.Button>
                     </Form>
                     </Modal.Content>

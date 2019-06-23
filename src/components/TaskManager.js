@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Menu, Button, Grid, Icon} from 'semantic-ui-react';
+import {Menu, Icon} from 'semantic-ui-react';
 
 import './TaskManager.css';
 import Aux from '../hoc/Aux/Aux';

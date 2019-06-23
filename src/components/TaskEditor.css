@@ -2,6 +2,10 @@
     text-align: right;
 }
 
+.EditorSubmitButton > button {
+    background-color: #3AAFA9 !important;
+}
+
 .EditorStatusCheckbox {
     text-align: left;
 }
