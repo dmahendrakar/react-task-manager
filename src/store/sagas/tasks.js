@@ -8,7 +8,7 @@ export function* initTasksSaga(action) {
     try {
         yield put(actions.fetchTasksStart());
 
-        const response = yield axios.get('/qa');
+        const response = yield axios.get('/');
         yield put(actions.initTasks(response.data));
 
         yield put(actions.fetchTasksSucceeded());
@@ -18,12 +18,12 @@ export function* initTasksSaga(action) {
     }
 }
 
-export function* createTasksSaga(action) {
+export function* createTaskSaga(action) {
     try {
         yield put(actions.createTaskStart());
 
         const {task} = action;        
-        const response = yield axios.post('/qa', task);
+        const response = yield axios.post('/', task);
         const {id} = response.data;
         yield put(actions.setTask(updateObject(task, {id: id})));
 
@@ -31,5 +31,20 @@ export function* createTasksSaga(action) {
     } catch (error) {
         console.error('[TasksWidget] error', error);
         yield put(actions.createTaskFailed(error));
+    }
+}
+
+export function* updateTaskSaga(action) {
+    try {
+        yield put(actions.updateTaskStart());
+
+        const {task} = action;        
+        yield axios.put('/', task);
+        yield put(actions.setTask(task));
+
+        yield put(actions.updateTaskSucceeded());
+    } catch (error) {
+        console.error('[TasksWidget] error', error);
+        yield put(actions.updateTaskFailed(error));
     }
 }

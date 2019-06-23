@@ -25,10 +25,10 @@ export const fetchTasksFailed = error => {
     };
 };
 
-export const updateTask = tasks => {
+export const updateTask = task => {
     return {
         type: actionTypes.UPDATE_TASK,
-        tasks
+        task
     };
 };
 

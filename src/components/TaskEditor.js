@@ -26,7 +26,7 @@ class TaskEditor extends Component {
     }
 
     componentDidUpdate = (prevProps, prevState) => {
-        if(this.props.task) {
+        if(JSON.stringify(this.state) === JSON.stringify(prevState) && this.props.task) {
             this.setState(this.props.task || this.initializeState());
         }
     }
@@ -59,7 +59,8 @@ class TaskEditor extends Component {
                             const data = Object.assign({}, this.state);
                             this.setState(this.initializeState(), ()=>{
                                 onSubmit(updateObject(data, {
-                                    creationTime: Date.now(),
+                                    creationTime: data.creationTime || Date.now(),
+                                    lastModifiedTime: Date.now(),
                                     status: data.status || 'PENDING'
                                 }));
                             });                        

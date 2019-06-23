@@ -82,10 +82,10 @@ class TaskList extends Component {
                             <Table.HeaderCell />
                             <Table.HeaderCell colSpan='4'>
                                 <Button floated='right' size='small' color='teal'>
-                                    <Icon name='checkmark' /> Completed
+                                    <Icon name='minus' /> Remove
                                 </Button>
                                 <Button floated='right' size='small' color='teal'>
-                                    <Icon name='minus' /> Remove
+                                    <Icon name='paper plane' /> Completed
                                 </Button>
                             </Table.HeaderCell>
                         </Table.Row>
@@ -100,7 +100,7 @@ class TaskList extends Component {
                     open={openEditor} 
                     task={selectedTask}
                     onClose={()=>{this.setState({openEditor:false})}}
-                    onSubmit={(newTask)=>{this.setState({openEditor:false}); console.log(newTask);}}
+                    onSubmit={(newTask)=>{this.setState({openEditor:false}); onUpdate(newTask);}}
                 />
             </div>
         );
