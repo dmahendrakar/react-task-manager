@@ -52,6 +52,21 @@ export function* updateTaskSaga(action) {
     }
 }
 
+export function* bulkUpdateTasksSaga(action) {
+    try {
+        yield put(actions.bulkUpdateTasksStart());
+
+        const {tasks} = action;        
+        yield axios.put('/bulk', tasks);
+        yield put(actions.setTasks(tasks));
+
+        yield put(actions.bulkUpdateTasksSucceeded());
+    } catch (error) {
+        console.error('[TaskManagerWidget] error', error);
+        yield put(actions.bulkUpdateTasksFailed(error));
+    }
+}
+
 export function* deleteTasksSaga(action) {
     try {
         yield put(actions.deleteTasksStart());

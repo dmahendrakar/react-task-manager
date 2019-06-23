@@ -18,6 +18,7 @@ class TaskList extends Component {
             tasks,
             onCreate,
             onUpdate,
+            onBulkUpdate,
             onDelete
         } = this.props;
 
@@ -92,7 +93,12 @@ class TaskList extends Component {
                                 }}>
                                     <Icon name='minus' /> Remove
                                 </Button>
-                                <Button floated='right' size='small' color='teal'>
+                                <Button floated='right' size='small' color='teal' onClick={()=>{
+                                    onBulkUpdate(checkedTasks.map(task => {
+                                        task.status = 'COMPLETED';
+                                        return task
+                                    }))
+                                }}>
                                     <Icon name='paper plane' /> Completed
                                 </Button>
                             </Table.HeaderCell>

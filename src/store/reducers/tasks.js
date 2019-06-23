@@ -35,6 +35,16 @@ const reducer = (state = initialState, action) => {
             })
         });
     }
+    case actionTypes.SET_TASKS: {
+        const {tasks} = action;
+
+        const updatedTasks = Object.assign({}, state.tasks);
+        tasks.forEach(task => updatedTasks[task.id] = task);
+        
+        return updateObject(state, {
+            tasks: updateObject(state.tasks, updatedTasks)
+        });
+    }
     case actionTypes.REMOVE_TASKS: {
         const {tasks} = action;
 

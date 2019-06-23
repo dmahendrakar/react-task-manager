@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { Icon, Header, Modal, Form, Input, TextArea } from 'semantic-ui-react';
+import { Icon, Header, Modal, Form, Input, TextArea, Label } from 'semantic-ui-react';
 
 import './TaskEditor.css';
 import Aux from '../hoc/Aux/Aux';
-import {updateObject} from '../shared/utility';
+import {updateObject, getHumanizedTime} from '../shared/utility';
 
 class TaskEditor extends Component {
     constructor(props) {
@@ -14,8 +14,7 @@ class TaskEditor extends Component {
     initializeState = () => {
         return {
             title: '', 
-            description: '',
-            status: 'PENDING'
+            description: ''
         };
     }
     handleChange = (e, { name, value }) => this.setState({ [name]: value })
@@ -40,7 +39,10 @@ class TaskEditor extends Component {
 
         const {
             title,
-            description
+            description,
+            creationTime,
+            lastModifiedTime,
+            status
         } = this.state;
 
         return (
@@ -78,7 +80,24 @@ class TaskEditor extends Component {
                             control={TextArea} 
                             label='Description' 
                             placeholder='Task description...' 
-                            onChange={this.handleChange}/>                        
+                            onChange={this.handleChange}/>
+                        <Form.Checkbox 
+                            name='status'
+                            checked={status === 'COMPLETED'}
+                            className='EditorStatusCheckbox' 
+                            label='The task completed' 
+                            toggle
+                            onChange={(e)=>this.handleChange(e, {
+                                name: 'status',
+                                value: status === 'PENDING' ? 'COMPLETED' : 'PENDING'
+                            })}    
+                            />
+                        <Label>
+                            <Icon name='calendar' /> Created on: {getHumanizedTime(creationTime)}
+                        </Label>  
+                        <Label>
+                            <Icon name='calendar' /> Modified on: {getHumanizedTime(lastModifiedTime)}
+                        </Label>        
                         <Form.Button className='EditorSubmitButton' color='green'>
                             <Icon name='checkmark' /> Save
                         </Form.Button>

@@ -14,6 +14,7 @@ const mapDispatchToProps = dispatch => {
     return {
         onCreate: newTask => dispatch(actions.createTask(newTask)),
         onUpdate: task => dispatch(actions.updateTask(task)),
+        onBulkUpdate: tasks => dispatch(actions.bulkUpdateTasks(tasks)),
         onDelete: tasks => dispatch(actions.deleteTasks(tasks))
     };
 };

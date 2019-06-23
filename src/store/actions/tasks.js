@@ -51,6 +51,32 @@ export const updateTaskFailed = error => {
     };
 };
 
+export const bulkUpdateTasks = tasks => {
+    return {
+        type: actionTypes.BULK_UPDATE_TASKS,
+        tasks
+    };
+};
+
+export const bulkUpdateTasksStart = () => {
+    return {
+        type: actionTypes.BULK_UPDATE_TASKS_START
+    };
+};
+
+export const bulkUpdateTasksSucceeded = () => {
+    return {
+        type: actionTypes.BULK_UPDATE_TASKS_SUCCEEDED
+    };
+};
+
+export const bulkUpdateTasksFailed = error => {
+    return {
+        type: actionTypes.BULK_UPDATE_TASKS_FAILED,
+        error
+    };
+};
+
 export const createTask = task => {
     return {
         type: actionTypes.CREATE_TASK,
@@ -116,6 +142,14 @@ export const setTask = task => {
     return {
         type: actionTypes.SET_TASK,
         task
+    };
+};
+
+// Add or replace tasks
+export const setTasks = tasks => {
+    return {
+        type: actionTypes.SET_TASKS,
+        tasks
     };
 };
 

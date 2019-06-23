@@ -1,3 +1,7 @@
 .EditorSubmitButton {
     text-align: right;
 }
+
+.EditorStatusCheckbox {
+    text-align: left;
+}
