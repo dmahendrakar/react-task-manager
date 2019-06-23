@@ -11,7 +11,8 @@ class TaskList extends Component {
         openCreator: false,
         clickedTask: {},
         checkedTasks: [],
-        checkedTasksIndex: []
+        checkedTasksIndex: [],
+        searchValue: ''
     }
 
     render() {
@@ -28,10 +29,12 @@ class TaskList extends Component {
             openCreator,
             clickedTask,
             checkedTasks,
-            checkedTasksIndex
+            checkedTasksIndex,
+            searchValue
         } = this.state;
 
-        const taskRows = tasks.map((task, index) => {
+        const filteredTasks = tasks.filter(task => task.title.includes(searchValue));
+        const taskRows = filteredTasks.map((task, index) => {
             const ClickableCell = (props) => {
                 return (
                     <Table.Cell onClick={()=>{
@@ -72,7 +75,9 @@ class TaskList extends Component {
         return (
             <div className='TaskListView'>
                 <div className='TaskListOperations'>
-                    <Input floated='left' icon='search' placeholder='Search by title...' />
+                    <Input floated='left' icon='search' placeholder='Search by title...' value={searchValue} onChange={(e, { name, value })=>{
+                        this.setState({searchValue: value});
+                    }}/>
                     <Button floated='right' icon labelPosition='left' color='teal' size='small'
                         onClick={()=>{
                             this.setState({openCreator: true});

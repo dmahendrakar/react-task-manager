@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Icon, Header, Modal, Form, Input, TextArea, Label } from 'semantic-ui-react';
+import { Icon, Header, Modal, Form, Input, TextArea, Label, Divider } from 'semantic-ui-react';
 
 import './TaskEditor.css';
 import Aux from '../hoc/Aux/Aux';
@@ -62,6 +62,17 @@ class TaskEditor extends Component {
                                 }));
                             });                        
                         }}>
+                        <Form.Checkbox 
+                            style={{display: task ? 'block' : 'none'}}
+                            name='status'
+                            checked={status === 'COMPLETED'}
+                            className='EditorStatusCheckbox' 
+                            label='The task completed' 
+                            toggle
+                            onChange={(e)=>this.handleChange(e, {
+                                name: 'status',
+                                value: status === 'PENDING' ? 'COMPLETED' : 'PENDING'
+                            })}/>
                         <Form.Field 
                             name='title'
                             value={title}
@@ -76,24 +87,14 @@ class TaskEditor extends Component {
                             label='Description' 
                             placeholder='Task description...' 
                             onChange={this.handleChange}/>
-                        <Form.Checkbox 
-                            style={{display: task ? 'block' : 'none'}}
-                            name='status'
-                            checked={status === 'COMPLETED'}
-                            className='EditorStatusCheckbox' 
-                            label='The task completed' 
-                            toggle
-                            onChange={(e)=>this.handleChange(e, {
-                                name: 'status',
-                                value: status === 'PENDING' ? 'COMPLETED' : 'PENDING'
-                            })}    
-                            />
+                        
                         <Label style={{display: task ? 'inline' : 'none'}}>
                             <Icon name='calendar' /> Created on: {getHumanizedTime(creationTime)}
                         </Label>  
                         <Label style={{display: task ? 'inline' : 'none'}}>
                             <Icon name='calendar' /> Modified on: {getHumanizedTime(lastModifiedTime)}
-                        </Label>        
+                        </Label>
+                        <Divider/>
                         <Form.Button className='EditorSubmitButton' color='green' size='small'>
                             <Icon name='save outline'/> Save
                         </Form.Button>
