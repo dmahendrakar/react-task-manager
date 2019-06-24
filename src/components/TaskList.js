@@ -10,10 +10,12 @@ class TaskList extends Component {
         openEditor: false,
         openCreator: false,
         clickedTask: {},
-        checkedTasks: [],
-        checkedTasksIndex: [],
+        checkedTasks: {},
         searchValue: ''
     }
+
+    resetCreator = (next = ()=>{}) => this.setState({openCreator:false, clickedTask: {}}, next);
+    resetEditor = (next = ()=>{}) => this.setState({openEditor:false, clickedTask: {}}, next);
 
     render() {
         const {
@@ -29,7 +31,6 @@ class TaskList extends Component {
             openCreator,
             clickedTask,
             checkedTasks,
-            checkedTasksIndex,
             searchValue
         } = this.state;
 
@@ -37,7 +38,7 @@ class TaskList extends Component {
         const taskRows = filteredTasks.map((task, index) => {
             const ClickableCell = (props) => {
                 return (
-                    <Table.Cell onClick={()=>{
+                    <Table.Cell onClick={() => {
                         this.setState({
                         openEditor: true,
                         clickedTask: task
@@ -51,18 +52,17 @@ class TaskList extends Component {
                     key={task.id}
                     >
                     <Table.Cell collapsing>
-                        <Checkbox slider checked={checkedTasksIndex.includes(index)} onClick={()=>{
-                            const _checkedTasksIndex = checkedTasksIndex;
-                            if (!_checkedTasksIndex.includes(index)) {
-                                _checkedTasksIndex.push(index);
+                        <Checkbox slider checked={Object.keys(checkedTasks).includes(String(index))} onClick={()=>{                            
+                            const _checkedTasks = Object.assign({}, checkedTasks);
+                            if (!Object.keys(_checkedTasks).includes(String(index))) {
+                                _checkedTasks[index] = task;
                             } else {
-                                _checkedTasksIndex.splice(_checkedTasksIndex.indexOf(index), 1);
+                                delete _checkedTasks[index];
                             }
 
-                            this.setState(updateObject(this.state, {
-                                checkedTasks: [...checkedTasks, task],
-                                checkedTasksIndex: _checkedTasksIndex
-                            }))
+                            this.setState({
+                                checkedTasks: _checkedTasks
+                            })
                         }} />
                     </Table.Cell>                
                     <ClickableCell value={task.title}/>
@@ -105,15 +105,15 @@ class TaskList extends Component {
                             <Table.HeaderCell />
                             <Table.HeaderCell colSpan='4'>
                                 <Button floated='right' size='small' color='teal' onClick={()=>{
-                                    this.setState({checkedTasks: [], checkedTasksIndex: []}, ()=>{
-                                        onDelete(checkedTasks);
+                                    this.setState({checkedTasks: {}}, ()=>{
+                                        onDelete(Object.values(checkedTasks));
                                     });
                                 }}>
                                     <Icon name='minus' /> Remove
                                 </Button>
                                 <Button floated='right' size='small' color='teal' onClick={()=>{
-                                    this.setState({checkedTasks: [], checkedTasksIndex: []}, ()=>{
-                                        onBulkUpdate(checkedTasks.map(task => {
+                                    this.setState({checkedTasks: {}}, ()=>{
+                                        onBulkUpdate(Object.values(checkedTasks).map(task => {
                                             task.status = 'COMPLETED';
                                             return task
                                         }))
@@ -127,14 +127,18 @@ class TaskList extends Component {
                 </Table>
                 <TaskEditor 
                     open={openCreator} 
-                    onClose={()=>{this.setState({openCreator:false})}}
-                    onSubmit={(newTask)=>{this.setState({openCreator:false}); onCreate(newTask);}}
+                    onClose={()=>{this.resetCreator()}}
+                    onSubmit={newTask => {this.resetCreator(()=>{
+                        onCreate(newTask)
+                    })}}
                 />
                 <TaskEditor 
                     open={openEditor} 
                     task={clickedTask}
-                    onClose={()=>{this.setState({openEditor:false})}}
-                    onSubmit={(newTask)=>{this.setState({openEditor:false}); onUpdate(newTask);}}
+                    onClose={()=>{this.resetEditor()}}
+                    onSubmit={task => {this.resetEditor(()=>{
+                        onUpdate(task)
+                    })}}
                 />
             </div>
         );
