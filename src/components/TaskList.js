@@ -154,9 +154,14 @@ class TaskList extends Component {
                     open={openEditor} 
                     task={clickedTask}
                     onClose={()=>{this.resetEditor()}}
-                    onSubmit={task => {this.resetEditor(()=>{
-                        onUpdate(task)
-                    })}}
+                    onSubmit={task => {
+                        this.setState({
+                            openEditor:false, 
+                            clickedTask: {}, 
+                            loaderText: 'Updating tasks...'
+                        });
+                        onUpdate(task);
+                    }}
                 />
                 <ToastContainer transition={Slide} />
             </div>

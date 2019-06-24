@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import { Icon, Header, Modal, Form, Input, TextArea, Label, Divider } from 'semantic-ui-react';
+import { DateTimeInput } from 'semantic-ui-calendar-react';
+import moment from 'moment-timezone';
 
 import './TaskEditor.css';
 import Aux from '../hoc/Aux/Aux';
 import {updateObject, getHumanizedTime} from '../shared/utility';
-//moment().utc().format("YYYY-MM-DDTHH:mm:ss[Z]")
+
 class TaskEditor extends Component {
     constructor(props) {
         super(props);
@@ -37,7 +39,8 @@ class TaskEditor extends Component {
             description,
             creationTime,
             lastModifiedTime,
-            status
+            status,
+            reminderTime
         } = this.state;
 
         return (
@@ -87,7 +90,20 @@ class TaskEditor extends Component {
                             label='Description' 
                             placeholder='Task description...' 
                             onChange={this.handleChange}/>
-                        
+                        <Form.Field 
+                            name='reminderTime'
+                            value={reminderTime ?
+                                moment(reminderTime).tz(moment.tz.guess()).format('DD-MM-YYYY HH:mm') : null}
+                            control={DateTimeInput}
+                            label='Reminder' 
+                            iconPosition='left'
+                            placeholder='Reminder Time' 
+                            onChange={(e, { name, value })=>{
+                                this.handleChange(e, {
+                                    name: 'reminderTime',
+                                    value: moment(value, 'DD-MM-YYYY HH:mm').unix() * 1000
+                                })
+                            }}/>
                         <Label style={{display: task ? 'inline' : 'none'}}>
                             <Icon name='calendar' /> Created on: {getHumanizedTime(creationTime)}
                         </Label>  
