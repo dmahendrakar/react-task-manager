@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { Button, Checkbox, Icon, Table, Input } from 'semantic-ui-react';
+import { Dimmer, Loader, Button, Checkbox, Icon, Table, Input } from 'semantic-ui-react';
 
 import './TaskList.css';
 import TaskEditor from './TaskEditor';
-import {getHumanizedTime, updateObject} from '../shared/utility';
+import {getHumanizedTime} from '../shared/utility';
 
 class TaskList extends Component {
     state = {
@@ -33,6 +33,14 @@ class TaskList extends Component {
             checkedTasks,
             searchValue
         } = this.state;
+
+        if(!tasks.length) {
+            return (
+                <Dimmer active inverted>
+                    <Loader inverted>Loading</Loader>
+                </Dimmer>
+            )
+        }
 
         const filteredTasks = tasks.filter(task => task.title.includes(searchValue));
         const taskRows = filteredTasks.map((task, index) => {

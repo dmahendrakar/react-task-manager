@@ -4,7 +4,7 @@ import { Icon, Header, Modal, Form, Input, TextArea, Label, Divider } from 'sema
 import './TaskEditor.css';
 import Aux from '../hoc/Aux/Aux';
 import {updateObject, getHumanizedTime} from '../shared/utility';
-
+//moment().utc().format("YYYY-MM-DDTHH:mm:ss[Z]")
 class TaskEditor extends Component {
     constructor(props) {
         super(props);
