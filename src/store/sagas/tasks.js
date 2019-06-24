@@ -2,10 +2,33 @@ import {put} from 'redux-saga/effects';
 import {
     pluck as _pluck
 } from 'underscore';
+import { toast } from 'react-toastify';
 
 import axios from '../../shared/axios';
 import * as actions from '../actions';
 import {updateObject} from '../../shared/utility';
+
+function toastSuccess(message) {
+    toast(message, {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+    })
+}
+
+function toastError(message) {
+    toast.success(message, {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+    })
+}
 
 export function* initTasksSaga(action) {
     try {
@@ -31,9 +54,11 @@ export function* createTaskSaga(action) {
         yield put(actions.setTask(updateObject(task, {id: id})));
 
         yield put(actions.createTaskSucceeded());
+        toastSuccess('Task created')
     } catch (error) {
         console.error('[TaskManagerWidget] error', error);
         yield put(actions.createTaskFailed(error));
+        toastError('Task create failed')
     }
 }
 
@@ -46,9 +71,11 @@ export function* updateTaskSaga(action) {
         yield put(actions.setTask(task));
 
         yield put(actions.updateTaskSucceeded());
+        toastSuccess('Task updated')
     } catch (error) {
         console.error('[TaskManagerWidget] error', error);
         yield put(actions.updateTaskFailed(error));
+        toastError('Task update failed')
     }
 }
 
@@ -61,9 +88,11 @@ export function* bulkUpdateTasksSaga(action) {
         yield put(actions.setTasks(tasks));
 
         yield put(actions.bulkUpdateTasksSucceeded());
+        toastSuccess('Tasks updated')
     } catch (error) {
         console.error('[TaskManagerWidget] error', error);
         yield put(actions.bulkUpdateTasksFailed(error));
+        toastError('Tasks update failed')
     }
 }
 
@@ -78,8 +107,10 @@ export function* deleteTasksSaga(action) {
         yield put(actions.removeTasks(tasks));
 
         yield put(actions.deleteTasksSucceeded());
+        toastSuccess('Tasks removed')
     } catch (error) {
         console.error('[TaskManagerWidget] error', error);
         yield put(actions.deleteTasksFailed(error));
+        toastError('Tasks removal failed')
     }
 }

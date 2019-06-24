@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Dimmer, Loader, Button, Checkbox, Icon, Table, Input } from 'semantic-ui-react';
+import { Slide, ToastContainer } from 'react-toastify';
 
 import './TaskList.css';
 import TaskEditor from './TaskEditor';
@@ -112,7 +113,7 @@ class TaskList extends Component {
                         <Table.Row>
                             <Table.HeaderCell />
                             <Table.HeaderCell colSpan='4'>
-                                <Button floated='right' size='small' color='teal' onClick={()=>{
+                                <Button floated='left' size='small' color='teal' onClick={()=>{
                                     this.setState({checkedTasks: {}}, ()=>{
                                         onDelete(Object.values(checkedTasks));
                                     });
@@ -148,6 +149,7 @@ class TaskList extends Component {
                         onUpdate(task)
                     })}}
                 />
+                <ToastContainer transition={Slide} />
             </div>
         );
     }

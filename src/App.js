@@ -3,6 +3,7 @@ import 'semantic-ui-css/semantic.min.css';
 import {createStore, applyMiddleware, compose} from 'redux';
 import createSagaMiddleware from 'redux-saga';
 import {Provider} from 'react-redux';
+import 'react-toastify/dist/ReactToastify.css';
 
 import './App.css';
 import TaskManager from './components/TaskManager';

@@ -4,6 +4,8 @@
 
 .TaskListView {
     margin: 5em;
+    margin-left:10em;
+    margin-right:10em;
 }
 
 .ThemedButton {
