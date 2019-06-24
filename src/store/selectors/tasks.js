@@ -9,3 +9,4 @@ export const getTaskList = createSelector(
 );
 
 export const getOperationInProgress = state => state.tasks.operationInProgress;
+export const getIsTasksSet = state => state.tasks.isSet;

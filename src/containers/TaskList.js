@@ -2,12 +2,13 @@ import {connect} from 'react-redux';
 
 import * as actions from '../store/actions';
 import TaskList from '../components/TaskList';
-import {getTaskList, getOperationInProgress} from '../store/selectors';
+import {getTaskList, getOperationInProgress, getIsTasksSet} from '../store/selectors';
 
 const mapStateToProps = state => {
     return {
+        loading: !getIsTasksSet(state),
         tasks: getTaskList(state),
-        operationInProgress: getOperationInProgress(state),
+        operationInProgress: getOperationInProgress(state),        
     };
 };
 

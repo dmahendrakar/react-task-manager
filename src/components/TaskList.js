@@ -21,6 +21,7 @@ class TaskList extends Component {
 
     render() {
         const {
+            loading,
             tasks,
             operationInProgress,
             onCreate,
@@ -38,7 +39,7 @@ class TaskList extends Component {
             loaderText
         } = this.state;
 
-        if(!tasks.length) {
+        if(loading) {
             return (
                 <Dimmer active inverted>
                     <Loader inverted>Loading</Loader>
