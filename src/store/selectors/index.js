@@ -1,4 +1,5 @@
 export {
     getTasks,
-    getTaskList
+    getTaskList,
+    getOperationInProgress
 } from './tasks';

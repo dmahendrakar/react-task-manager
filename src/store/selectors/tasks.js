@@ -7,3 +7,5 @@ export const getTaskList = createSelector(
     getTasks,
     tasks => _sortBy(Object.values(tasks), 'creationTime')
 );
+
+export const getOperationInProgress = state => state.tasks.operationInProgress;

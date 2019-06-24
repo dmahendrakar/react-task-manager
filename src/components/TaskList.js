@@ -12,7 +12,8 @@ class TaskList extends Component {
         openCreator: false,
         clickedTask: {},
         checkedTasks: {},
-        searchValue: ''
+        searchValue: '',
+        loaderText: ''
     }
 
     resetCreator = (next = ()=>{}) => this.setState({openCreator:false, clickedTask: {}}, next);
@@ -21,6 +22,7 @@ class TaskList extends Component {
     render() {
         const {
             tasks,
+            operationInProgress,
             onCreate,
             onUpdate,
             onBulkUpdate,
@@ -32,7 +34,8 @@ class TaskList extends Component {
             openCreator,
             clickedTask,
             checkedTasks,
-            searchValue
+            searchValue,
+            loaderText
         } = this.state;
 
         if(!tasks.length) {
@@ -89,7 +92,7 @@ class TaskList extends Component {
                     }}/>
                     <Button floated='right' icon labelPosition='left' color='teal' size='small'
                         onClick={()=>{
-                            this.setState({openCreator: true});
+                            this.setState({openCreator: true, loaderText: 'Adding task...'});
                         }}
                     >
                         <Icon name='plus' /> Add
@@ -113,15 +116,20 @@ class TaskList extends Component {
                         <Table.Row>
                             <Table.HeaderCell />
                             <Table.HeaderCell colSpan='4'>
-                                <Button floated='left' size='small' color='teal' onClick={()=>{
-                                    this.setState({checkedTasks: {}}, ()=>{
+                                <span style={{display: operationInProgress && loaderText.length ? 'inline': 'none'}}>
+                                    <Loader active inline/>&nbsp;&nbsp;{loaderText}
+                                </span>
+                                <Button floated='right' size='small' color='teal' onClick={()=>{
+                                    if(!Object.keys(checkedTasks).length) return;
+                                    this.setState({checkedTasks: {}, loaderText: 'Removing tasks...'}, ()=>{
                                         onDelete(Object.values(checkedTasks));
                                     });
                                 }}>
                                     <Icon name='minus' /> Remove
                                 </Button>
                                 <Button floated='right' size='small' color='teal' onClick={()=>{
-                                    this.setState({checkedTasks: {}}, ()=>{
+                                    if(!Object.keys(checkedTasks).length) return;
+                                    this.setState({checkedTasks: {}, loaderText: 'Updating tasks...'}, ()=>{
                                         onBulkUpdate(Object.values(checkedTasks).map(task => {
                                             task.status = 'COMPLETED';
                                             return task
@@ -129,7 +137,7 @@ class TaskList extends Component {
                                     });
                                 }}>
                                     <Icon name='check' /> Completed
-                                </Button>
+                                </Button>                        
                             </Table.HeaderCell>
                         </Table.Row>
                     </Table.Footer>

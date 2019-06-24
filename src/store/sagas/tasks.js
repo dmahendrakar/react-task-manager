@@ -54,11 +54,11 @@ export function* createTaskSaga(action) {
         yield put(actions.setTask(updateObject(task, {id: id})));
 
         yield put(actions.createTaskSucceeded());
-        toastSuccess('Task created')
+        toastSuccess('Task added')
     } catch (error) {
         console.error('[TaskManagerWidget] error', error);
         yield put(actions.createTaskFailed(error));
-        toastError('Task create failed')
+        toastError('Task addition failed')
     }
 }
 

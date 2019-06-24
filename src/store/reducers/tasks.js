@@ -7,7 +7,8 @@ import {updateObject} from '../../shared/utility';
 
 const initialState = {
     tasks: {},
-    isSet: false
+    isSet: false,
+    operationInProgress: false
 };
 
 export const makeTaskIdMap = (tasks) => {
@@ -50,6 +51,31 @@ const reducer = (state = initialState, action) => {
 
         return updateObject(state, {
             tasks: _difference(state.tasks, tasks)
+        });
+    }
+    case actionTypes.FETCH_TASKS_START:
+    case actionTypes.CREATE_TASK_START:
+    case actionTypes.UPDATE_TASK_START:
+    case actionTypes.BULK_UPDATE_TASKS_START:
+    case actionTypes.DELETE_TASKS_START:
+    {
+        return updateObject(state, {
+            operationInProgress: true
+        });
+    }
+    case actionTypes.FETCH_TASKS_SUCCEEDED:
+    case actionTypes.FETCH_TASKS_FAILED:
+    case actionTypes.CREATE_TASK_SUCCEEDED:
+    case actionTypes.CREATE_TASK_FAILED:
+    case actionTypes.UPDATE_TASK_SUCCEEDED:
+    case actionTypes.UPDATE_TASK_FAILED:
+    case actionTypes.BULK_UPDATE_TASKS_SUCCEEDED:
+    case actionTypes.BULK_UPDATE_TASKS_FAILED:
+    case actionTypes.DELETE_TASKS_SUCCEEDED:
+    case actionTypes.DELETE_TASKS_FAILED:
+    {
+        return updateObject(state, {
+            operationInProgress: false
         });
     }
     default:
