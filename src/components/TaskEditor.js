@@ -40,7 +40,8 @@ class TaskEditor extends Component {
             creationTime,
             lastModifiedTime,
             status,
-            reminderTime
+            reminderTime,
+            reminderRecipientEmail
         } = this.state;
 
         return (
@@ -104,6 +105,13 @@ class TaskEditor extends Component {
                                     value: moment(value, 'DD-MM-YYYY HH:mm').unix() * 1000
                                 })
                             }}/>
+                        <Form.Field 
+                            name='reminderRecipientEmail'
+                            value={reminderRecipientEmail}
+                            control={Input}
+                            label='Reminder Recipient Email' 
+                            placeholder='Email' 
+                            onChange={this.handleChange}/>
                         <Label style={{display: task ? 'inline' : 'none'}}>
                             <Icon name='calendar' /> Created on: {getHumanizedTime(creationTime)}
                         </Label>  
