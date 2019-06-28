@@ -117,10 +117,7 @@ class TaskList extends Component {
                         <Table.Row>
                             <Table.HeaderCell />
                             <Table.HeaderCell colSpan='4'>
-                                <span style={{display: operationInProgress && loaderText.length ? 'inline': 'none'}}>
-                                    <Loader active inline/>&nbsp;&nbsp;{loaderText}
-                                </span>
-                                <Button floated='right' size='small' color='teal' onClick={()=>{
+                                <Button floated='left' size='small' color='teal' onClick={()=>{
                                     if(!Object.keys(checkedTasks).length) return;
                                     this.setState({checkedTasks: {}, loaderText: 'Removing tasks...'}, ()=>{
                                         onDelete(Object.values(checkedTasks));
@@ -128,7 +125,7 @@ class TaskList extends Component {
                                 }}>
                                     <Icon name='minus' /> Remove
                                 </Button>
-                                <Button floated='right' size='small' color='teal' onClick={()=>{
+                                <Button floated='left' size='small' color='teal' onClick={()=>{
                                     if(!Object.keys(checkedTasks).length) return;
                                     this.setState({checkedTasks: {}, loaderText: 'Updating tasks...'}, ()=>{
                                         onBulkUpdate(Object.values(checkedTasks).map(task => {
@@ -139,7 +136,10 @@ class TaskList extends Component {
                                     });
                                 }}>
                                     <Icon name='check' /> Completed
-                                </Button>                        
+                                </Button> 
+                                <span style={{display: operationInProgress && loaderText.length ? 'inline': 'none', float: 'right', marginRight: '10px'}}>
+                                    <Loader active inline/>&nbsp;&nbsp;{loaderText}
+                                </span>                       
                             </Table.HeaderCell>
                         </Table.Row>
                     </Table.Footer>
