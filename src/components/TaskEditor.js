@@ -16,7 +16,7 @@ class TaskEditor extends Component {
     initialState = () => {
         return { 
             title: '', 
-            description: '',
+            description: undefined,
             reminderTime: undefined,
             reminderRecipientEmail: undefined,
             status: 'PENDING'
@@ -68,6 +68,9 @@ class TaskEditor extends Component {
                     <Form onSubmit={(e) => {
                             e.preventDefault();
                             const data = Object.assign({}, this.state);
+                            // Remove undefined fields
+                            Object.keys(data).forEach(key => data[key] === undefined ? delete data[key] : '');
+
                             this.setState(this.initialState(), ()=>{
                                 onSubmit(updateObject(data, {
                                     creationTime: data.creationTime || Date.now(),
@@ -93,6 +96,7 @@ class TaskEditor extends Component {
                             control={Input}
                             label='Title' 
                             placeholder='Task title' 
+                            required
                             onChange={this.handleChange}/>
                         <Form.Field 
                             name='description'
