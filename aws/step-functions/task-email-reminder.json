@@ -1,0 +1,17 @@
+{
+    "Comment": "Waits and for reminder due date and sends reminder for task",
+    "StartAt": "WaitForReminderDueDate",
+    "States": {
+      "WaitForReminderDueDate": {
+        "Type": "Wait",
+        "TimestampPath": "$.reminderISOTime",
+        "Next": "SendReminder"
+      },
+      "SendReminder": {
+        "Type": "Task",
+        "Resource": "arn:aws:lambda:us-west-2:554376166526:function:task-email-reminder",
+        "End": true
+      }
+    }
+  }
+  
