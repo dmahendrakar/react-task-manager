@@ -1,13 +1,14 @@
 # React Task Manager
 
-![Serverless design](https://github.com/dpkm95/react-task-manager/blob/master/docs/design.png)
-
 ### Features
 * Add/Update/Remove tasks
 * Set email reminder for task
-* Bulk edit status & remove tasks
+* Bulk remove tasks & edit status
+* Bulk edit task status
 * Search by title
-* Mark tasks status (in bulk as well) (complete/pending)
+
+### Backend Design
+![Serverless design](https://github.com/dpkm95/react-task-manager/blob/master/docs/design.png)
 
 ### TODO
 * Stop running state-machine if remainder is rescheduled

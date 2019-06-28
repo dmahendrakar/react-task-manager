@@ -78,6 +78,7 @@ node_modules/
 build/
 lib/
 dist/
+tmp/
 
 # misc
 .DS_Store
