@@ -10,7 +10,17 @@ import {updateObject, getHumanizedTime} from '../shared/utility';
 class TaskEditor extends Component {
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = this.initialState();
+    }
+    
+    initialState = () => {
+        return { 
+            title: '', 
+            description: '',
+            reminderTime: undefined,
+            reminderRecipientEmail: undefined,
+            status: 'PENDING'
+        }
     }
 
     handleChange = (e, { name, value }) => this.setState({ [name]: value })
@@ -49,16 +59,16 @@ class TaskEditor extends Component {
                 <Modal 
                     open={open} 
                     closeIcon 
-                    onClose={()=>{this.setState({}, ()=>{
+                    onClose={()=>{this.setState(this.initialState(), ()=>{
                         onClose()
                     })}}
-                    >
+                >
                     <Header icon='edit' content='Task Editor' />
                     <Modal.Content>
                     <Form onSubmit={(e) => {
                             e.preventDefault();
                             const data = Object.assign({}, this.state);
-                            this.setState({}, ()=>{
+                            this.setState(this.initialState(), ()=>{
                                 onSubmit(updateObject(data, {
                                     creationTime: data.creationTime || Date.now(),
                                     lastModifiedTime: Date.now(),

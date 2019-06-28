@@ -133,6 +133,7 @@ class TaskList extends Component {
                                     this.setState({checkedTasks: {}, loaderText: 'Updating tasks...'}, ()=>{
                                         onBulkUpdate(Object.values(checkedTasks).map(task => {
                                             task.status = 'COMPLETED';
+                                            task.lastModifiedTime = Date.now()
                                             return task
                                         }))
                                     });
