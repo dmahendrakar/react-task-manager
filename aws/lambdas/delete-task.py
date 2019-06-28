@@ -50,6 +50,6 @@ def lambda_handler(event, context):
     except: 
         exc_type, exc_value, exc_traceback = sys.exc_info()
         lines = traceback.format_exception(exc_type, exc_value, exc_traceback)
-        print(''.join('!! ' + line for line in lines))
+        logger.info(''.join('!! ' + line for line in lines))
         
         return generate_response(500, 'Error occurred while processing delete tasks')

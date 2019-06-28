@@ -57,7 +57,7 @@ def update_task(event):
         logger.info("Remainder is already set");
         exc_type, exc_value, exc_traceback = sys.exc_info()
         lines = traceback.format_exception(exc_type, exc_value, exc_traceback)
-        print(''.join('!! ' + line for line in lines))  # Log it or whatever here
+        logger.info(''.join('!! ' + line for line in lines))  # Log it or whatever here
         
     return response
 
@@ -74,6 +74,6 @@ def lambda_handler(event, context):
     except:
         exc_type, exc_value, exc_traceback = sys.exc_info()
         lines = traceback.format_exception(exc_type, exc_value, exc_traceback)
-        print(''.join('!! ' + line for line in lines))  # Log it or whatever here
+        logger.info(''.join('!! ' + line for line in lines))  # Log it or whatever here
         
         return generate_response(500, 'Error occurred while processing update tasks')

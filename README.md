@@ -10,9 +10,10 @@
 * Mark tasks status (in bulk as well) (complete/pending)
 
 ### TODO
-* User management: login & email verification
-* Host UI & service on same host via Route 53
-* Tighten AWS Roles
+* Stop running state-machine if remainder is rescheduled
 * Soft delete on tasks removal
+* User management: login & email verification
+* Host using Route 53
+* Tighten AWS Roles
 * Get tasks by id
 * Support task tagging & search
