@@ -1,0 +1,1 @@
+![Serverless design](https://github.com/dpkm95/react-task-manager/blob/master/aws/step-functions/task-email-reminder.png)
