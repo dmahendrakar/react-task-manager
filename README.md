@@ -3,7 +3,7 @@
 ### Features
 * Add/Update/Remove tasks
 * Set email reminder for task
-* Bulk remove tasks & edit status
+* Bulk remove tasks
 * Bulk edit task status
 * Search by title
 
