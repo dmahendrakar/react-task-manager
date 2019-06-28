@@ -50,7 +50,10 @@ const reducer = (state = initialState, action) => {
         const {tasks} = action;
 
         return updateObject(state, {
-            tasks: _difference(state.tasks, tasks)
+            tasks: makeTaskIdMap(_difference(            
+                Object.values(state.tasks),
+                tasks
+            ))
         });
     }
     case actionTypes.FETCH_TASKS_START:
