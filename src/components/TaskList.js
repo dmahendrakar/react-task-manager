@@ -79,8 +79,8 @@ class TaskList extends Component {
                         }} />
                     </Table.Cell>                
                     <ClickableCell value={task.title}/>
-                    <ClickableCell value={getHumanizedTime(task.creationTime)}/>
                     <ClickableCell value={task.status || 'PENDING'}/>
+                    <ClickableCell value={getHumanizedTime(task.creationTime)}/>
                 </Table.Row>
             );
         });
@@ -104,8 +104,8 @@ class TaskList extends Component {
                         <Table.Row>
                             <Table.HeaderCell />
                             <Table.HeaderCell>Title</Table.HeaderCell>
-                            <Table.HeaderCell>Created Date</Table.HeaderCell>
-                            <Table.HeaderCell>Status</Table.HeaderCell>
+                            <Table.HeaderCell width={1}>Status</Table.HeaderCell>
+                            <Table.HeaderCell width={3}>Created On</Table.HeaderCell>                            
                         </Table.Row>
                     </Table.Header>
 
