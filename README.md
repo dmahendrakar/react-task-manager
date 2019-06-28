@@ -12,12 +12,12 @@
 
 ### TODO
 #### Features
-* Support task due-time and remaind x duration before task due
+* Support task due-time and remind x duration before task due
 * User management: login & email verification
 * Get tasks by id
 * Support task tagging & search
 #### TechDebt
 * Tighten AWS Roles
-* Stop running state-machine if remainder is rescheduled
+* Stop running state-machines if remainder is rescheduled
 * Soft delete on tasks removal
 * Host using Route 53
