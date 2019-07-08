@@ -34,7 +34,7 @@ export function* initTasksSaga(action) {
     try {
         yield put(actions.fetchTasksStart());
 
-        const response = yield axios.get('/');
+        // const response = yield axios.get('/');
         // yield put(actions.initTasks(response.data));
 
         yield put(actions.fetchTasksSucceeded());
