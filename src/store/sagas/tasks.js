@@ -35,7 +35,7 @@ export function* initTasksSaga(action) {
         yield put(actions.fetchTasksStart());
 
         const response = yield axios.get('/');
-        yield put(actions.initTasks(response.data));
+        // yield put(actions.initTasks(response.data));
 
         yield put(actions.fetchTasksSucceeded());
     } catch (error) {
@@ -49,8 +49,9 @@ export function* createTaskSaga(action) {
         yield put(actions.createTaskStart());
 
         const {task} = action;        
-        const response = yield axios.post('/', task);
-        const {id} = response.data;
+        // const response = yield axios.post('/', task);
+        // const {id} = response.data;
+        const id = Date.now();
         yield put(actions.setTask(updateObject(task, {id: id})));
 
         yield put(actions.createTaskSucceeded());
@@ -67,7 +68,7 @@ export function* updateTaskSaga(action) {
         yield put(actions.updateTaskStart());
 
         const {task} = action;        
-        yield axios.put('/', task);
+        // yield axios.put('/', task);
         yield put(actions.setTask(task));
 
         yield put(actions.updateTaskSucceeded());
@@ -84,7 +85,7 @@ export function* bulkUpdateTasksSaga(action) {
         yield put(actions.bulkUpdateTasksStart());
 
         const {tasks} = action;        
-        yield axios.put('/bulk', tasks);
+        // yield axios.put('/bulk', tasks);
         yield put(actions.setTasks(tasks));
 
         yield put(actions.bulkUpdateTasksSucceeded());
@@ -101,9 +102,9 @@ export function* deleteTasksSaga(action) {
         yield put(actions.deleteTasksStart());
 
         const {tasks} = action;        
-        yield axios.delete('/bulk', {data: _pluck(tasks, 'id').map(id => {
-            return {id};
-        })});
+        // yield axios.delete('/bulk', {data: _pluck(tasks, 'id').map(id => {
+        //     return {id};
+        // })});
         yield put(actions.removeTasks(tasks));
 
         yield put(actions.deleteTasksSucceeded());
